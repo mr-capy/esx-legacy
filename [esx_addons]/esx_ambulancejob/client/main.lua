@@ -115,6 +115,7 @@ AddEventHandler('esx_ambulancejob:useItem', function(itemName)
 
 		ESX.Streaming.RequestAnimDict(lib, function()
 			TaskPlayAnim(playerPed, lib, anim, 8.0, -8.0, -1, 0, 0, false, false, false)
+			RemoveAnimDict(lib)
 
 			Wait(500)
 			while IsEntityPlayingAnim(playerPed, lib, anim, 3) do
@@ -132,6 +133,7 @@ AddEventHandler('esx_ambulancejob:useItem', function(itemName)
 
 		ESX.Streaming.RequestAnimDict(lib, function()
 			TaskPlayAnim(playerPed, lib, anim, 8.0, -8.0, -1, 0, 0, false, false, false)
+			RemoveAnimDict(lib)
 
 			Wait(500)
 			while IsEntityPlayingAnim(playerPed, lib, anim, 3) do
@@ -310,18 +312,16 @@ function RemoveItemsAfterRPDeath()
 	TriggerServerEvent('esx_ambulancejob:setDeathStatus', false)
 
 	CreateThread(function()
-		DoScreenFadeOut(800)
-
-		while not IsScreenFadedOut() do
-			Wait(0)
-		end
-
 		ESX.TriggerServerCallback('esx_ambulancejob:removeItemsAfterRPDeath', function()
 			local RespawnCoords, ClosestHospital = GetClosestRespawnPoint()
-
+			
 			ESX.SetPlayerData('loadout', {})
-			RespawnPed(PlayerPedId(), RespawnCoords, ClosestHospital.heading)
 
+			DoScreenFadeOut(800)
+			RespawnPed(PlayerPedId(), RespawnCoords, ClosestHospital.heading)
+			while not IsScreenFadedOut() do
+			Wait(0)
+			end
 			AnimpostfxStop('DeathFailOut')
 			DoScreenFadeIn(800)
 		end)

@@ -10,7 +10,7 @@ CREATE TABLE `addon_account` (
 
 INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 ('caution', 'caution', 0),
-('property_black_money', 'Argent Sale Propriété', 0),
+('property_black_money', 'Realestate', 0),
 ('society_ambulance', 'EMS', 1),
 ('society_cardealer', 'Cardealer', 1),
 ('society_mechanic', 'Mechanic', 1),
@@ -39,11 +39,7 @@ INSERT INTO `addon_account_data` (`id`, `account_name`, `money`, `owner`) VALUES
 (2, 'society_police', 0, NULL),
 (3, 'society_ambulance', 0, NULL),
 (4, 'society_mechanic', 0, NULL),
-(5, 'society_taxi', 0, NULL),
-(6, 'caution', 0, 'dd5a2e91e9aa1b6c4fc1f66e44f949954c733450'),
-(7, 'caution', 0, 'char1:5e396ab5a00ebd7885ae4df5771b1e79535be6f6'),
-(8, 'property_black_money', 0, 'char1:5e396ab5a00ebd7885ae4df5771b1e79535be6f6');
-
+(5, 'society_taxi', 0, NULL);
 -- --------------------------------------------------------
 
 --
@@ -175,7 +171,7 @@ INSERT INTO `datastore_data` (`id`, `name`, `owner`, `data`) VALUES
 (2, 'society_ambulance', NULL, '{}'),
 (3, 'society_mechanic', NULL, '{}'),
 (4, 'society_taxi', NULL, '{}'),
-(5, 'property', 'char1:5e396ab5a00ebd7885ae4df5771b1e79535be6f6', '{}');
+(5, 'property', NULL, '{}');
 
 -- --------------------------------------------------------
 
@@ -210,6 +206,7 @@ INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES
 ('essence', 'Gas', 1, 0, 1),
 ('fabric', 'Fabric', 1, 0, 1),
 ('fish', 'Fish', 1, 0, 1),
+('radio', 'Radio', 1, 0, 1),
 ('fixkit', 'Repair Kit', 3, 0, 1),
 ('fixtool', 'Repair Tools', 2, 0, 1),
 ('gazbottle', 'Gas Bottle', 2, 0, 1),
@@ -330,6 +327,10 @@ CREATE TABLE `licenses` (
 --
 
 INSERT INTO `licenses` (`type`, `label`) VALUES
+('dmv', 'Driving Permit'),
+('drive', 'Drivers License'),
+('drive_bike', 'Motorcycle License'),
+('drive_truck', 'Commercial Drivers License'),
 ('weed_processing', 'Weed Processing License');
 
 -- --------------------------------------------------------
@@ -845,67 +846,6 @@ CREATE TABLE `vehicle_sold` (
   `date` varchar(50) NOT NULL
 ) ENGINE=InnoDB;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `weashops`
---
-
-CREATE TABLE `weashops` (
-  `id` int(11) NOT NULL,
-  `zone` varchar(255) NOT NULL,
-  `item` varchar(255) NOT NULL,
-  `price` int(11) NOT NULL
-) ENGINE=InnoDB;
-
---
--- Dumping data for table `weashops`
---
-
-INSERT INTO `weashops` (`id`, `zone`, `item`, `price`) VALUES
-(1, 'GunShop', 'WEAPON_PISTOL', 300),
-(2, 'BlackWeashop', 'WEAPON_PISTOL', 500),
-(3, 'GunShop', 'WEAPON_FLASHLIGHT', 60),
-(4, 'BlackWeashop', 'WEAPON_FLASHLIGHT', 70),
-(5, 'GunShop', 'WEAPON_MACHETE', 90),
-(6, 'BlackWeashop', 'WEAPON_MACHETE', 110),
-(7, 'GunShop', 'WEAPON_NIGHTSTICK', 150),
-(8, 'BlackWeashop', 'WEAPON_NIGHTSTICK', 150),
-(9, 'GunShop', 'WEAPON_BAT', 100),
-(10, 'BlackWeashop', 'WEAPON_BAT', 100),
-(11, 'GunShop', 'WEAPON_STUNGUN', 50),
-(12, 'BlackWeashop', 'WEAPON_STUNGUN', 50),
-(13, 'GunShop', 'WEAPON_MICROSMG', 1400),
-(14, 'BlackWeashop', 'WEAPON_MICROSMG', 1700),
-(15, 'GunShop', 'WEAPON_PUMPSHOTGUN', 3400),
-(16, 'BlackWeashop', 'WEAPON_PUMPSHOTGUN', 3500),
-(17, 'GunShop', 'WEAPON_ASSAULTRIFLE', 10000),
-(18, 'BlackWeashop', 'WEAPON_ASSAULTRIFLE', 11000),
-(19, 'GunShop', 'WEAPON_SPECIALCARBINE', 15000),
-(20, 'BlackWeashop', 'WEAPON_SPECIALCARBINE', 16500),
-(21, 'GunShop', 'WEAPON_SNIPERRIFLE', 22000),
-(22, 'BlackWeashop', 'WEAPON_SNIPERRIFLE', 24000),
-(23, 'GunShop', 'WEAPON_FIREWORK', 18000),
-(24, 'BlackWeashop', 'WEAPON_FIREWORK', 20000),
-(25, 'GunShop', 'WEAPON_GRENADE', 500),
-(26, 'BlackWeashop', 'WEAPON_GRENADE', 650),
-(27, 'GunShop', 'WEAPON_BZGAS', 200),
-(28, 'BlackWeashop', 'WEAPON_BZGAS', 350),
-(29, 'GunShop', 'WEAPON_FIREEXTINGUISHER', 100),
-(30, 'BlackWeashop', 'WEAPON_FIREEXTINGUISHER', 100),
-(31, 'GunShop', 'WEAPON_BALL', 50),
-(32, 'BlackWeashop', 'WEAPON_BALL', 50),
-(33, 'GunShop', 'WEAPON_SMOKEGRENADE', 100),
-(34, 'BlackWeashop', 'WEAPON_SMOKEGRENADE', 100),
-(35, 'BlackWeashop', 'WEAPON_APPISTOL', 1100),
-(36, 'BlackWeashop', 'WEAPON_CARBINERIFLE', 12000),
-(37, 'BlackWeashop', 'WEAPON_HEAVYSNIPER', 30000),
-(38, 'BlackWeashop', 'WEAPON_MINIGUN', 45000),
-(39, 'BlackWeashop', 'WEAPON_RAILGUN', 50000),
-(40, 'BlackWeashop', 'WEAPON_STICKYBOMB', 500);
-
--- --------------------------------------------------------
-
 --
 -- Table structure for table `whitelist`
 --
@@ -1061,12 +1001,6 @@ ALTER TABLE `vehicle_sold`
   ADD PRIMARY KEY (`plate`);
 
 --
--- Indexes for table `weashops`
---
-ALTER TABLE `weashops`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `whitelist`
 --
 ALTER TABLE `whitelist`
@@ -1143,12 +1077,6 @@ ALTER TABLE `user_licenses`
 --
 ALTER TABLE `user_parkings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `weashops`
---
-ALTER TABLE `weashops`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- ESX Phone
@@ -1255,3 +1183,14 @@ INSERT INTO `job_grades` (job_name, grade, name, label, salary, skin_male, skin_
 	('banker',3,'trader','Trader',40,'{}','{}'),
 	('banker',4,'boss','Patron',0,'{}','{}')
 ;
+
+--
+-- ESX Banking
+--
+
+CREATE TABLE IF NOT EXISTS `banking` (
+  `identifier` varchar(50) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `amount` int(64) DEFAULT NULL,
+  `time` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
