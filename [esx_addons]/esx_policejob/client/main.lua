@@ -1571,6 +1571,22 @@ function StartHandcuffTimer()
 	end)
 end
 
+if Config.EnableCuffCommand then
+	RegisterCommand(Config.CuffCommand, function(src)
+		if ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' and not ESX.PlayerData.dead then
+			local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+			if closestPlayer ~= -1 and closestDistance <= 3.0 then
+				TriggerServerEvent('esx_policejob:handcuff', GetPlayerServerId(closestPlayer))
+			else
+				ESX.ShowNotification(_U('no_players_nearby') , "info" , 5000) 
+			end
+		end
+	end)
+end
+if Config.EnableCuffKey then
+RegisterKeyMapping(Config.CuffCommand, "Police Cuff Key", "keyboard", Config.CuffKey)
+end
+
 -- TODO
 --   - return to garage if owned
 --   - message owner that his vehicle has been impounded
