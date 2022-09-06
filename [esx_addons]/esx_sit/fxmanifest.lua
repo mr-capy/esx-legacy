@@ -3,8 +3,8 @@ fx_version 'adamant'
 game 'gta5'
 
 description 'ESX Sit'
-
-version '1.6.5'
+lua54 'yes'
+version '1.7.5'
 
 shared_script '@es_extended/imports.lua'
 
